@@ -8,9 +8,9 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-app.use(cors()); // CORS ayarları
+app.use(cors());
 
-const users = {}; //example users
+const users = {}; // örnek kullanıcılar
 
 app.post('/api/register', (req, res) => {
   const { username } = req.body;
@@ -41,7 +41,7 @@ app.post('/api/login', (req, res) => {
 
   const { username, authKey } = req.body;
   console.log('Extracted values:', { username, authKey });
-  if (!username || !authkey) {
+  if (!username || !authKey) {
     return res.status(400).json({ message: 'Eksik kullanıcı adı veya kod' });
   }
 
@@ -51,7 +51,7 @@ app.post('/api/login', (req, res) => {
     return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
   }
 
-  const isValid = otplib.authenticator.check(authkey, user.secret);
+  const isValid = otplib.authenticator.check(authKey, user.secret);
 
   console.log('Auth key validation result:', isValid);
 
