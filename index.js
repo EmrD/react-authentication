@@ -7,14 +7,11 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// Body-parser middleware'ini kullanarak JSON verilerini işleyebilmek için
 app.use(bodyParser.json());
 app.use(cors()); // CORS ayarları
 
-// Kullanıcı verilerini saklamak için basit bir veri yapısı (gerçek uygulamalarda veritabanı kullanmalısınız)
-const users = {};
+const users = {}; //example users
 
-// POST /api/register endpoint'i
 app.post('/api/register', (req, res) => {
   const { username } = req.body;
 
@@ -22,16 +19,13 @@ app.post('/api/register', (req, res) => {
     return res.status(400).json({ message: 'Kullanıcı adı gereklidir' });
   }
 
-  // Kullanıcı zaten mevcutsa yeni bir kayıt yapma
   if (users[username]) {
     return res.status(400).json({ message: 'Kullanıcı zaten kayıtlı' });
   }
 
-  // Gizli anahtar üretme ve kullanıcı verilerini saklama
   const secret = otplib.authenticator.generateSecret();
   users[username] = { secret };
 
-  // QR kodu oluşturma
   const otpauth = otplib.authenticator.keyuri(username, 'MyApp', secret);
   qrcode.toDataURL(otpauth, (err, qrCodeUrl) => {
     if (err) {
@@ -43,11 +37,10 @@ app.post('/api/register', (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-  console.log('Login request body:', req.body); // Gelen veriyi loglayın
+  console.log('Login request body:', req.body);
 
-  const { username, authkey } = req.body;
-  console.log('Extracted values:', { username, authkey }); // `username` ve `authkey`'i loglayın
-
+  const { username, authKey } = req.body;
+  console.log('Extracted values:', { username, authKey });
   if (!username || !authkey) {
     return res.status(400).json({ message: 'Eksik kullanıcı adı veya kod' });
   }
@@ -58,7 +51,6 @@ app.post('/api/login', (req, res) => {
     return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
   }
 
-  // Kodun geçerli olup olmadığını kontrol etme
   const isValid = otplib.authenticator.check(authkey, user.secret);
 
   console.log('Auth key validation result:', isValid);
