@@ -1,83 +1,83 @@
 # React Authentication App
 
-Bu proje, basit bir kullanıcı kaydı ve giriş sistemi uygulamasıdır. Kullanıcılar, kullanıcı adı ile kayıt olabilir ve ardından sağlanan QR kodunu taratarak giriş yapabilirler.
+This project is a simple user registration and login system. Users can register with a username and then log in by scanning the provided QR code.
 
-## Özellikler
+## Features
 
-- Kullanıcı adı ile kayıt olma
-- QR kodu alma
-- Kullanıcı adı ve QR kodu ile giriş yapma
-- Başarı ve hata mesajları gösterme
+- Register with a username
+- Receive a QR code
+- Log in with a username and QR code
+- Display success and error messages
 
-## Kurulum
+## Installation
 
-1. Bu proje için gerekli olan `node` ve `npm` (veya `yarn`) yüklü olduğundan emin olun.
-2. Proje klasörüne gidin ve gerekli paketleri yüklemek için aşağıdaki komutu çalıştırın:
+1. Ensure that `node` and `npm` (or `yarn`) are installed.
+2. Navigate to the project directory and run the following command to install the necessary packages:
 
     ```bash
     npm install
     ```
 
-    veya
+    or
 
     ```bash
     yarn install
     ```
 
-## Kullanım
+## Usage
 
-1. Geliştirme sunucusunu başlatmak için aşağıdaki komutu çalıştırın:
+1. To start the development server, run the following command:
 
     ```bash
     npm run dev
     ```
 
-    veya
+    or
 
     ```bash
     yarn start
     ```
 
-2. Tarayıcınızda `http://localhost:3000` adresine gidin.
+2. Open your browser and go to `http://localhost:3000`.
 
-## API Uç Noktaları
+## API Endpoints
 
-- **Kayıt Ol**: 
+- **Register**: 
   - **URL**: `https://react-authentication-backend.vercel.app/api/register`
-  - **Yöntem**: `POST`
-  - **Gövde**:
+  - **Method**: `POST`
+  - **Body**:
     ```json
     {
-      "username": "kullanıcı_adı"
+      "username": "your_username"
     }
     ```
-  - **Yanıt**:
+  - **Response**:
     ```json
     {
-      "qrCodeUrl": "QR kodu URL'si"
+      "qrCodeUrl": "URL of the QR code"
     }
     ```
 
-- **Giriş Yap**:
+- **Login**:
   - **URL**: `https://react-authentication-backend.vercel.app/api/login`
-  - **Yöntem**: `POST`
-  - **Gövde**:
+  - **Method**: `POST`
+  - **Body**:
     ```json
     {
-      "username": "kullanıcı_adı",
-      "authKey": "QR kodu"
+      "username": "your_username",
+      "authKey": "QR code"
     }
     ```
-  - **Yanıt**:
+  - **Response**:
     ```json
     {
-      "message": "Başarı veya hata mesajı"
+      "message": "Success or error message"
     }
     ```
 
-## Bileşenler
+## Components
 
-- `App` bileşeni:
-  - Kullanıcı adı ve QR kodu ile kayıt ve giriş işlemlerini sağlar.
-  - Kayıt ve giriş işlemleri için `fetch` API'sini kullanır.
-  - Kullanıcı arayüzünde, kullanıcı adı girişi, kayıt butonu, QR kodu görüntüleme ve giriş yapma alanlarını içerir.
+- `App` component:
+  - Handles user registration and login with a username and QR code.
+  - Uses the `fetch` API for registration and login operations.
+  - Includes user input fields, a register button, QR code display, and login fields in the user interface.
