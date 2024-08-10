@@ -12,6 +12,10 @@ app.use(cors());
 
 const users = {}; // örnek kullanıcılar
 
+app.get("/" , (req , res) => {
+  res.send("React Google Authenticator uygulamasının backend tarafındasınız. Lütfen bu servise yalnızca React uygulaması üzerinden erişin.")
+})
+
 app.post('/api/register', (req, res) => {
   const { username } = req.body;
 
