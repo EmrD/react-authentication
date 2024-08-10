@@ -43,14 +43,11 @@ app.post('/api/register', (req, res) => {
 });
 
 // POST /api/login endpoint'i
-// POST /api/login endpoint'i
 app.post('/api/login', (req, res) => {
   const { username, authkey } = req.body;
 
-  console.log('Login request received with:', { username, authkey });
-
   if (!username || !authkey) {
-    return res.status(400).json({ message: 'Eksik kullanıcı adı veya kod' });
+    return res.status(400).json({ message: { username , authkey } });
   }
 
   const user = users[username];
@@ -62,15 +59,12 @@ app.post('/api/login', (req, res) => {
   // Kodun geçerli olup olmadığını kontrol etme
   const isValid = otplib.authenticator.check(authkey, user.secret);
 
-  console.log('Auth key validation result:', isValid);
-
   if (isValid) {
     res.json({ message: 'Giriş başarılı!' });
   } else {
     res.status(401).json({ message: 'Geçersiz kod' });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Sunucu http://localhost:${port} adresinde çalışıyor`);
