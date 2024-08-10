@@ -26,7 +26,7 @@ app.post('/api/register', (req, res) => {
   const secret = otplib.authenticator.generateSecret();
   users[username] = { secret };
 
-  const otpauth = otplib.authenticator.keyuri(username, 'MyApp', secret);
+  const otpauth = otplib.authenticator.keyuri(username, 'React-App', secret);
   qrcode.toDataURL(otpauth, (err, qrCodeUrl) => {
     if (err) {
       return res.status(500).json({ message: 'QR kodu oluşturulamadı' });
