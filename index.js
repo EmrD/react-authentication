@@ -43,9 +43,10 @@ app.post('/api/register', (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-  const { username, authkey } = req.body;
+  console.log('Login request body:', req.body); // Gelen veriyi loglayın
 
-  console.log('Login request received with:', { username, authkey });
+  const { username, authkey } = req.body;
+  console.log('Extracted values:', { username, authkey }); // `username` ve `authkey`'i loglayın
 
   if (!username || !authkey) {
     return res.status(400).json({ message: 'Eksik kullanıcı adı veya kod' });
