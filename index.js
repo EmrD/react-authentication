@@ -2,22 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const otplib = require('otplib');
 const qrcode = require('qrcode');
-const cors = require("cors");
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
-
+// Body-parser middleware'ini kullanarak JSON verilerini işleyebilmek için
 app.use(bodyParser.json());
+app.use(cors()); // CORS ayarları
 
-const users = {
-    "emr":
-    {
-        "secret": "secret"
-    }
-};
+// Kullanıcı verilerini saklamak için basit bir veri yapısı (gerçek uygulamalarda veritabanı kullanmalısınız)
+const users = {};
 
+// POST /api/register endpoint'i
 app.post('/api/register', (req, res) => {
   const { username } = req.body;
 
@@ -25,6 +22,12 @@ app.post('/api/register', (req, res) => {
     return res.status(400).json({ message: 'Kullanıcı adı gereklidir' });
   }
 
+  // Kullanıcı zaten mevcutsa yeni bir kayıt yapma
+  if (users[username]) {
+    return res.status(400).json({ message: 'Kullanıcı zaten kayıtlı' });
+  }
+
+  // Gizli anahtar üretme ve kullanıcı verilerini saklama
   const secret = otplib.authenticator.generateSecret();
   users[username] = { secret };
 
